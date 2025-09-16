@@ -1,0 +1,104 @@
+/* Enhanced styles for database schema connections */
+
+/* Extremely thick edges for maximum visibility */
+.react-flow__edge-path {
+  stroke-width: 6;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+}
+
+/* Use extremely bright, neon colors for schema connections */
+.react-flow__edge.one-to-many .react-flow__edge-path {
+  stroke: #38bdf8; /* bright sky blue */
+}
+
+.react-flow__edge.many-to-one .react-flow__edge-path {
+  stroke: #fb7185; /* bright pink */
+}
+
+.react-flow__edge.one-to-one .react-flow__edge-path {
+  stroke: #4ade80; /* bright green */
+}
+
+.react-flow__edge.many-to-many .react-flow__edge-path {
+  stroke: #facc15; /* bright yellow */
+}
+
+/* Add glow effect to make edges more visible */
+.schema-flow .react-flow__edge-path {
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
+}
+/* Animated line patterns for different relationship types */
+.react-flow__edge.one-to-many .react-flow__edge-path {
+  stroke-dasharray: none;
+}
+
+.react-flow__edge.many-to-one .react-flow__edge-path {
+  stroke-dasharray: 10, 2;
+}
+
+.react-flow__edge.one-to-one .react-flow__edge-path {
+  stroke-dasharray: none;
+}
+
+.react-flow__edge.many-to-many .react-flow__edge-path {
+  stroke-dasharray: 5, 5;
+}
+
+/* Increase edge highlight on hover for even better visibility */
+.react-flow__edge:hover .react-flow__edge-path {
+  stroke-width: 6;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.8));
+}
+
+/* Make edges glow for extreme visibility */
+.schema-flow .react-flow__edge-path {
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.4));
+}
+
+/* Large arrows for better visibility at connection endpoints */
+.react-flow__edge-markerpath {
+  fill: currentColor;
+  stroke: none;
+  transform: scale(1.5);
+}
+
+/* Enhanced edge text for better readability */
+.react-flow__edge-text {
+  font-size: 14px;
+  font-weight: 700;
+  fill: #ffffff;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.7));
+  background: rgba(0, 0, 0, 0.6);
+  padding: 5px;
+}
+
+/* Make edges stand out on dark background */
+.schema-flow .react-flow__edge-path {
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+}
+
+/* Add animation to edges to increase visibility */
+@keyframes pulseEdge {
+  0% { stroke-width: 4; }
+  50% { stroke-width: 5; }
+  100% { stroke-width: 4; }
+}
+
+.schema-flow .react-flow__edge-path {
+  animation: pulseEdge 2s infinite;
+}
+
+/* Custom styles for specific relationship types */
+.schema-flow .react-flow__edge.one-to-many .react-flow__edge-path {
+  stroke-linecap: round;
+}
+
+.schema-flow .react-flow__edge.many-to-many .react-flow__edge-path {
+  stroke-linecap: round;
+}
+
+/* Add a white border to the edges to make them stand out */
+.schema-flow .react-flow__edge-path {
+  stroke-width: 5;
+  stroke-opacity: 0.9;
+}
