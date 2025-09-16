@@ -29,7 +29,7 @@ export function ProjectManagement({ onSelectProject, selectedProject, projects, 
   const fetchProjects = async () => {
     try {
       setLoading(true)
-      const response = await fetch('http://localhost:4000/api/projects')
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/projects`)
       const result = await response.json()
       
       if (result.success) {
@@ -47,7 +47,7 @@ export function ProjectManagement({ onSelectProject, selectedProject, projects, 
 
   const handleDeleteProject = async (projectId: string) => {
     try {
-      const response = await fetch(`http://localhost:4000/api/projects/${projectId}`, {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/projects/${projectId}`, {
         method: 'DELETE'
       })
       

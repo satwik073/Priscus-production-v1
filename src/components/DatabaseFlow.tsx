@@ -115,7 +115,7 @@ const DatabaseFlow = () => {
       try {
         setLoading(true);
         // Try to get schema from workflow first, fallback to static schema
-        const res = await fetch('http://localhost:4000/api/database-schema');
+        const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/database-schema`);
         const json = await res.json();
         if (json.success) {
           setSchema(json.data);

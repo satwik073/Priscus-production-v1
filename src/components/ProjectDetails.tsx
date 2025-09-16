@@ -37,7 +37,7 @@ export function ProjectDetails({ project, onBack, onProjectUpdate }: ProjectDeta
     
     setLoading(true)
     try {
-      const response = await fetch('http://localhost:4000/api/generate-kanban', {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/generate-kanban`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -66,7 +66,7 @@ export function ProjectDetails({ project, onBack, onProjectUpdate }: ProjectDeta
     
     setLoading(true)
     try {
-      const response = await fetch('http://localhost:4000/api/generate-workflow', {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/generate-workflow`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

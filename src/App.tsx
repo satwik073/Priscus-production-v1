@@ -140,7 +140,7 @@ function App() {
   const handleProjectSubmit = async (data: ProjectData) => {
     setLoading(true)
     try {
-      const response = await fetch('http://localhost:4000/api/analyze-project', {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/analyze-project`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -163,7 +163,7 @@ function App() {
     if (!analysisData || !projectId || !projectData) return
     setLoading(true)
     try {
-      const response = await fetch('http://localhost:4000/api/generate-kanban', {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/generate-kanban`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
@@ -189,7 +189,7 @@ function App() {
     if (!analysisData || !projectId || !projectData) return
     setLoading(true)
     try {
-      const response = await fetch('http://localhost:4000/api/generate-workflow', {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/generate-workflow`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
