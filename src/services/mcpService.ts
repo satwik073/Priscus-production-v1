@@ -4,13 +4,6 @@ interface MCPTool {
   inputSchema: any;
 }
 
-interface MCPResponse {
-  content: Array<{
-    type: string;
-    text: string;
-  }>;
-}
-
 interface MCPProject {
   id: string;
   title: string;
