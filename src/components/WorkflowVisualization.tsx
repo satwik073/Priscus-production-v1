@@ -9,7 +9,7 @@ import ReactFlow, {
   BackgroundVariant,
   MarkerType,
 } from 'reactflow'
-import type { Connection, Node, Edge } from 'reactflow'
+import type { Connection } from 'reactflow'
 import 'reactflow/dist/style.css'
 import './WorkflowVisualization.css'
 import './connection-improvements.css'
