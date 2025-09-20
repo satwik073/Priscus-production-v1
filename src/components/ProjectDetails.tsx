@@ -3,7 +3,6 @@ import { ArrowLeft, FileText, MessageSquare, CheckSquare, Calendar, User, Clock,
 import { ProjectAnalysis } from './ProjectAnalysis'
 import { KanbanBoard } from './KanbanBoard'
 import { WorkflowVisualization } from './WorkflowVisualization'
-import DatabaseFlow from './DatabaseFlow'
 
 interface Project {
   _id: string
