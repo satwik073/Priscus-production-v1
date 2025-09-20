@@ -1,0 +1,183 @@
+/* Global Component Styles based on DatabaseSchemaDiagram.css */
+
+/* Common container styles */
+.component-container {
+  background: var(--color-bg-primary);
+  padding: 32px;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  margin: 32px auto;
+  max-width: 1200px;
+  color: var(--color-text-primary);
+}
+
+/* Header styles */
+.component-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.component-header h2 {
+  color: var(--color-text-primary);
+  margin-bottom: 8px;
+  font-size: 24px;
+}
+
+.component-header p {
+  color: var(--color-text-secondary);
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.component-subheader {
+  color: var(--color-accent-blue);
+  font-size: 14px;
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* Highlight element with pulsing animation */
+.highlight-element {
+  color: var(--color-accent-orange);
+  font-size: 20px;
+  font-weight: bold;
+  animation: pulse-connection 2s infinite alternate;
+  display: inline-block;
+}
+
+/* Common content layout */
+.component-content {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+/* Card styles */
+.component-card {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Card header styles */
+.card-header {
+  background: var(--color-border-primary);
+  padding: 12px 16px;
+  border-radius: 10px 10px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--color-border-secondary);
+}
+
+.card-title {
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--color-text-primary);
+}
+
+.card-content {
+  padding: 12px;
+}
+
+/* Row items in cards */
+.item-row {
+  margin-bottom: 12px;
+  padding: 8px;
+  background: var(--color-bg-tertiary);
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--color-border-primary);
+}
+
+/* Tags and badges */
+.tag {
+  font-size: 10px;
+  padding: 2px 6px;
+  background: var(--color-accent-blue);
+  color: var(--color-text-primary);
+  border-radius: 3px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.tag-green {
+  background: var(--color-accent-green);
+}
+
+.tag-orange {
+  background: var(--color-accent-orange);
+}
+
+/* Legend section */
+.component-legend {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--border-radius-md);
+  padding: 20px;
+  margin-top: 24px;
+}
+
+.component-legend h4 {
+  color: var(--color-text-primary);
+  margin-bottom: 16px;
+  font-size: 16px;
+}
+
+.legend-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  background: var(--color-bg-tertiary);
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--color-border-primary);
+}
+
+/* Side details panel */
+.details-panel {
+  width: 300px;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--border-radius-md);
+  padding: 20px;
+  height: fit-content;
+}
+
+.details-panel h3 {
+  color: var(--color-text-primary);
+  margin-bottom: 16px;
+  font-size: 18px;
+}
+
+/* Animation for relationship lines */
+@keyframes pulse {
+  0% {
+    stroke-width: 3px;
+    filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.3));
+  }
+  100% {
+    stroke-width: 4px;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .component-content {
+    flex-direction: column;
+  }
+  
+  .details-panel {
+    width: 100%;
+  }
+}

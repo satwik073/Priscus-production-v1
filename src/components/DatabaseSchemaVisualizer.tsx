@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Database, Table, Key, Link, Star, Hash, Circle, CircleDot } from 'lucide-react'
+import { Database, Table, ExternalLink, Key, Hash, Star, Circle, CircleDot } from 'lucide-react'
 import ReactFlow, {
   Background,
   BackgroundVariant,
@@ -44,7 +44,7 @@ type SchemaGraph = {
 }
 
 // Supabase-style Table Node Component
-const DatabaseEntityNode = ({ data }: { data: any }) => {
+const SupabaseTableNode = ({ data }: { data: any }) => {
   const getFieldIcon = (field: SchemaField) => {
     if (field.isPrimaryKey) return <Key className="w-3 h-3 text-yellow-400" />
     if (field.constraints?.includes('UNIQUE')) return <Star className="w-3 h-3 text-blue-400" />
@@ -83,7 +83,7 @@ const DatabaseEntityNode = ({ data }: { data: any }) => {
           <span className="font-medium text-white text-sm">{data.label}</span>
         </div>
         <button className="p-1 hover:bg-gray-700 rounded text-gray-400 hover:text-white transition-colors">
-          <Link className="w-3 h-3" />
+          <ExternalLink className="w-3 h-3" />
         </button>
       </div>
 
@@ -106,7 +106,7 @@ const DatabaseEntityNode = ({ data }: { data: any }) => {
 }
 
 // Supabase-style Relationship Edge Component
-const RelationshipEdge = ({
+const SupabaseRelationshipEdge = ({
   id,
   source: _source,
   target: _target,
@@ -117,7 +117,7 @@ const RelationshipEdge = ({
   sourcePosition,
   targetPosition,
   style = {},
-  data: _data,
+  data,
   markerEnd,
   label
 }: EdgeProps) => {
@@ -171,20 +171,14 @@ const RelationshipEdge = ({
 }
 
 const nodeTypes = {
-  databaseEntity: DatabaseEntityNode,
+  supabaseTable: SupabaseTableNode,
 }
 
 const edgeTypes = {
-  relationship: RelationshipEdge,
+  supabaseRelationship: SupabaseRelationshipEdge,
 }
 
-interface DatabaseFlowProps {
-  projectTitle?: string
-  projectDescription?: string
-  analysis?: any
-}
-
-const DatabaseFlow = ({ projectTitle, projectDescription, analysis }: DatabaseFlowProps = {}) => {
+const DatabaseSchemaVisualizer = () => {
   const [schema, setSchema] = useState<SchemaGraph | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -194,39 +188,29 @@ const DatabaseFlow = ({ projectTitle, projectDescription, analysis }: DatabaseFl
     const load = async () => {
       try {
         setLoading(true)
-        
-        // Generate schema using AI based on project data
-        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/generate-database-schema`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            title: projectTitle || 'Project',
-            description: projectDescription || '',
-            analysis: analysis || {}
-          })
-        })
+        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/database-schema`)
         const result = await response.json()
         
         if (result.success) {
           setSchema(result.data)
         } else {
-          setError('Failed to generate schema')
+          setError('Failed to load schema')
         }
       } catch (e) {
-        setError('Failed to generate schema')
+        setError('Failed to load schema')
       } finally {
         setLoading(false)
       }
     }
     load()
-  }, [projectTitle, projectDescription, analysis])
+  }, [])
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-20">
-        <div className="glass-card p-8 text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent-orange mx-auto mb-4"></div>
-          <p className="text-dark-text-secondary">Generating database schema...</p>
+      <div className="flex items-center justify-center h-96">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <p className="text-gray-400">Loading database schema...</p>
         </div>
       </div>
     )
@@ -234,8 +218,8 @@ const DatabaseFlow = ({ projectTitle, projectDescription, analysis }: DatabaseFl
 
   if (error) {
     return (
-      <div className="flex items-center justify-center py-20">
-        <div className="glass-card p-8 text-center">
+      <div className="flex items-center justify-center h-96">
+        <div className="text-center">
           <Database className="w-8 h-8 text-red-500 mx-auto mb-4" />
           <p className="text-red-400">{error}</p>
         </div>
@@ -247,7 +231,7 @@ const DatabaseFlow = ({ projectTitle, projectDescription, analysis }: DatabaseFl
 
   const nodes: Node[] = schema.entities.map((e) => ({
     id: e.name,
-    type: 'databaseEntity',
+    type: 'supabaseTable',
     position: e.position,
     data: {
       label: e.name,
@@ -261,7 +245,7 @@ const DatabaseFlow = ({ projectTitle, projectDescription, analysis }: DatabaseFl
     source: r.source,
     target: r.target,
     label: r.label,
-    type: 'relationship',
+    type: 'supabaseRelationship',
     animated: false,
     style: {
       strokeWidth: 1,
@@ -278,8 +262,8 @@ const DatabaseFlow = ({ projectTitle, projectDescription, analysis }: DatabaseFl
 
   return (
     <div className="h-full bg-gray-950">
-      {/* Schema Header - Supabase style */}
-      <div className="flex items-center gap-2 p-3 border-b border-gray-800 bg-gray-900">
+      {/* Schema Header */}
+      <div className="flex items-center gap-2 p-3 border-b border-gray-800">
         <div className="flex items-center gap-2">
           <Database className="w-4 h-4 text-gray-300" />
           <span className="text-white text-sm font-medium">schema</span>
@@ -287,7 +271,7 @@ const DatabaseFlow = ({ projectTitle, projectDescription, analysis }: DatabaseFl
         </div>
       </div>
 
-      {/* Interactive Canvas - Supabase style */}
+      {/* Interactive Canvas */}
       <div className="h-[calc(100vh-200px)] relative">
         <ReactFlow
           nodes={nodes}
@@ -297,7 +281,7 @@ const DatabaseFlow = ({ projectTitle, projectDescription, analysis }: DatabaseFl
           fitView
           fitViewOptions={{ padding: 0.2 }}
           defaultEdgeOptions={{
-            type: 'relationship',
+            type: 'supabaseRelationship',
             animated: false,
             style: { 
               strokeWidth: 1,
@@ -331,7 +315,7 @@ const DatabaseFlow = ({ projectTitle, projectDescription, analysis }: DatabaseFl
         </ReactFlow>
       </div>
 
-      {/* Legend - Bottom of screen - Supabase style */}
+      {/* Legend - Bottom of screen */}
       <div className="absolute bottom-4 left-4 bg-gray-900 border border-gray-700 rounded-lg p-3">
         <div className="flex items-center gap-6 text-xs">
           <div className="flex items-center gap-1">
@@ -416,4 +400,4 @@ function getFieldIcon(field: SchemaField) {
   return <Circle className="w-3 h-3 text-gray-400" />
 }
 
-export default DatabaseFlow
+export default DatabaseSchemaVisualizer

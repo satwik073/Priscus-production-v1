@@ -1,0 +1,57 @@
+/* Analysis Action Buttons styles */
+.analysis-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+
+.action-button {
+  padding: 12px 24px;
+  border-radius: var(--border-radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  font-size: 16px;
+  min-width: 200px;
+}
+
+.action-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.action-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.action-button.primary {
+  background-color: var(--color-accent-blue);
+  color: var(--color-text-primary);
+}
+
+.action-button.primary:hover:not(:disabled) {
+  background-color: #3b82f6;
+}
+
+.action-button.secondary {
+  background-color: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-primary);
+}
+
+.action-button.secondary:hover:not(:disabled) {
+  background-color: var(--color-border-primary);
+}
+
+.action-button.accent {
+  background-color: var(--color-accent-orange);
+  color: var(--color-text-primary);
+}
+
+.action-button.accent:hover:not(:disabled) {
+  background-color: #ea580c;
+}
