@@ -15,18 +15,7 @@ interface ProjectData {
   description: string
 }
 
-interface AnalysisData {
-  score: number
-  pillars: Array<{
-    name: string
-    score: number
-    feedback: string
-  }>
-  advantages: string[]
-  disadvantages: string[]
-  features: string[]
-  recommendations: string[]
-}
+
 
 interface KanbanData {
   pipelines: Array<{
@@ -132,7 +121,7 @@ function App() {
   const [currentStep, setCurrentStep] = useState<'projects' | 'form' | 'analysis' | 'kanban' | 'workflow' | 'ui-design' | 'project-details' | 'mcp'>('projects')
   const [projectData, setProjectData] = useState<ProjectData | null>(null)
   const [projectId, setProjectId] = useState<string | null>(null)
-  const [analysisData, setAnalysisData] = useState<AnalysisData | null>(null)
+  const [analysisData, setAnalysisData] = useState<any | null>(null)
   const [kanbanData, setKanbanData] = useState<KanbanData | null>(null)
   const [workflowData, setWorkflowData] = useState<WorkflowData | null>(null)
   const [uiDesignData, setUiDesignData] = useState<DesignData | null>(null)
