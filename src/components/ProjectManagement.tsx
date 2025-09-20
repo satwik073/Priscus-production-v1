@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Search, Filter, Calendar, User, X, Plus, Trash2, Eye, Clock, CheckCircle, AlertCircle } from 'lucide-react'
+import { Search, Filter, X, Plus, Trash2, Eye, Clock, CheckCircle, AlertCircle } from 'lucide-react'
 
 interface Project {
   _id: string

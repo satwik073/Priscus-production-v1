@@ -117,7 +117,6 @@ const SupabaseRelationshipEdge = ({
   sourcePosition,
   targetPosition,
   style = {},
-  data,
   markerEnd,
   label
 }: EdgeProps) => {
