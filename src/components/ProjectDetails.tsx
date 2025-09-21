@@ -3,6 +3,7 @@ import { ArrowLeft, FileText, MessageSquare, CheckSquare, Calendar, User, Clock,
 import { ProjectAnalysis } from './ProjectAnalysis'
 import { KanbanBoard } from './KanbanBoard'
 import { WorkflowVisualization } from './WorkflowVisualization'
+import { DetailedDesignVisualizer } from './DetailedDesignVisualizer'
 
 interface Project {
   _id: string
@@ -11,6 +12,7 @@ interface Project {
   analysis?: any
   kanban?: any
   workflow?: any
+  detailedDesign?: any
   createdAt: string
   updatedAt: string
 }
@@ -91,7 +93,7 @@ const mockTasks = [
 ]
 
 export function ProjectDetails({ project, onBack, onProjectUpdate }: ProjectDetailsProps) {
-  const [currentView, setCurrentView] = useState<'overview' | 'analysis' | 'kanban' | 'workflow' | 'database'>('overview')
+  const [currentView, setCurrentView] = useState<'overview' | 'analysis' | 'kanban' | 'workflow' | 'database' | 'detailedDesign'>('overview')
   const [loading, setLoading] = useState(false)
   const [currentProject, setCurrentProject] = useState(project)
   const [searchQuery, setSearchQuery] = useState('')
@@ -173,6 +175,35 @@ export function ProjectDetails({ project, onBack, onProjectUpdate }: ProjectDeta
       }
     } catch (error) {
       console.error('Error generating workflow:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleGenerateDetailedDesign = async () => {
+    if (!currentProject.analysis) return
+    
+    setLoading(true)
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/generate-detailed-design`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          analysis: currentProject.analysis,
+          projectId: currentProject._id,
+          title: currentProject.title,
+          description: currentProject.description
+        })
+      })
+      const result = await response.json()
+      if (result.success) {
+        const updatedProject = { ...currentProject, detailedDesign: result.data }
+        setCurrentProject(updatedProject)
+        onProjectUpdate?.(updatedProject)
+        setCurrentView('detailedDesign')
+      }
+    } catch (error) {
+      console.error('Error generating detailed design:', error)
     } finally {
       setLoading(false)
     }
@@ -439,6 +470,13 @@ export function ProjectDetails({ project, onBack, onProjectUpdate }: ProjectDeta
             >
               Workflow
             </button>
+            <button 
+              className={`filter-button ${currentView === 'detailedDesign' ? 'active' : ''}`}
+              onClick={() => setCurrentView('detailedDesign')}
+              disabled={!currentProject.detailedDesign}
+            >
+              Design
+            </button>
           </div>
         </div>
         
@@ -468,6 +506,7 @@ export function ProjectDetails({ project, onBack, onProjectUpdate }: ProjectDeta
             onGenerateKanban={handleGenerateKanban}
             onGenerateWorkflow={handleGenerateWorkflow}
             onGenerateUIDesign={() => {}}
+            onGenerateDetailedDesign={handleGenerateDetailedDesign}
             loading={loading}
           />
         )}
@@ -481,6 +520,9 @@ export function ProjectDetails({ project, onBack, onProjectUpdate }: ProjectDeta
             projectDescription={currentProject.description}
             analysis={currentProject.analysis}
           />
+        )}
+        {currentView === 'detailedDesign' && currentProject.detailedDesign && (
+          <DetailedDesignVisualizer data={currentProject.detailedDesign} />
         )}
       </div>
     </div>

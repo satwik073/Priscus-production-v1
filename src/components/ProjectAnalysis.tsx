@@ -70,6 +70,7 @@ interface ProjectAnalysisProps {
   onGenerateKanban: () => void
   onGenerateWorkflow: () => void
   onGenerateUIDesign: () => void
+  onGenerateDetailedDesign: () => void
   loading: boolean
 }
 
@@ -78,6 +79,7 @@ export function ProjectAnalysis({
   onGenerateKanban, 
   onGenerateWorkflow, 
   onGenerateUIDesign,
+  onGenerateDetailedDesign,
   loading 
 }: ProjectAnalysisProps) {
   const getScoreColor = (score: number) => {
@@ -295,7 +297,7 @@ export function ProjectAnalysis({
           <ArrowRight className="w-5 h-5 text-accent-blue" />
           Next Steps
         </h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <button 
             onClick={onGenerateKanban} 
             disabled={loading}
@@ -344,6 +346,23 @@ export function ProjectAnalysis({
               <>
                 <Sparkles className="w-4 h-4" />
                 Generate UI Design
+              </>
+            )}
+          </button>
+          <button 
+            onClick={onGenerateDetailedDesign} 
+            disabled={loading}
+            className="modern-button flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed bg-accent-green hover:bg-accent-green/80"
+          >
+            {loading ? (
+              <>
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                Generating...
+              </>
+            ) : (
+              <>
+                <Sparkles className="w-4 h-4" />
+                Generate Detailed Design
               </>
             )}
           </button>
