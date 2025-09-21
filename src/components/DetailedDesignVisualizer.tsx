@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Monitor, Smartphone, Tablet, Palette, Type, Layout, Users, Shield, Eye, ArrowRight, Play, Pause, Maximize2, Minimize2 } from 'lucide-react'
+import { useState } from 'react'
+import { Monitor, Smartphone, Tablet, Palette, Type, Layout, Users, Shield, Eye, ArrowRight, Play, Pause } from 'lucide-react'
 
 interface DetailedDesignData {
   wireframes: Array<{

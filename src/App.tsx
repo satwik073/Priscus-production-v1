@@ -315,12 +315,13 @@ function App() {
           
           {currentStep === 'analysis' && analysisData && (
             <ProjectAnalysis 
-              data={analysisData} 
+              data={analysisData}
               onGenerateKanban={handleGenerateKanban}
               onGenerateWorkflow={handleGenerateWorkflow}
               onGenerateUIDesign={handleGenerateUIDesign}
-              loading={loading}
-            />
+              loading={loading} onGenerateDetailedDesign={function (): void {
+                throw new Error('Function not implemented.')
+              } }            />
           )}
           
           {currentStep === 'kanban' && kanbanData && (
